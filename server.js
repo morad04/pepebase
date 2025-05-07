@@ -57,8 +57,14 @@ const MAX_WORDS = 10000;
 // Shared handler for text-to-image
 async function textToImageHandler(req, res) {
   try {
+    // Add logging to debug the request
+    console.log("Request body:", req.body);
+    console.log("Request query:", req.query);
+
     const prompt =
-      req.body.prompt || req.query.prompt || "a beautiful landscape";
+      req.body?.prompt || req.query?.prompt || "a beautiful landscape";
+    console.log("Using prompt:", prompt);
+
     const promptWordCount = prompt.trim().split(/\s+/).length;
     if (promptWordCount > MAX_WORDS) {
       return res.status(400).send({
