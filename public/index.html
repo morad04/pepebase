@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <title>402 API</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #2563eb;
+        }
+
+        pre {
+            background-color: #f1f5f9;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: 'SF Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+        }
+
+        .card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #64748b;
+        }
+
+        a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .collapsible-trigger {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.15em;
+        }
+
+        .route-header {
+            display: flex;
+            align-items: center;
+        }
+
+        .cost-badge {
+            background: #2563eb;
+            color: #fff;
+            border-radius: 12px;
+            padding: 2px 10px;
+            font-size: 0.95em;
+            margin-left: 8px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .collapsible-trigger::after {
+            content: '\25BC';
+            /* Down arrow */
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+
+        .collapsible-trigger.active::after {
+            content: '\25B2';
+            /* Up arrow */
+        }
+
+        .collapsible-content {
+            padding-top: 10px;
+            display: none;
+        }
+
+        .collapsible-content.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>402 API</h1>
+        <p>A collection of demo api tools using the <a href="https://www.x402.org/" target="_blank">402 payment</a>
+            protocol
+        </p>
+    </header>
+
+
+    <div>
+        <h2>Available API Endpoints (GET or POST)</h2>
+
+        <div class=" card">
+            <h3 class="collapsible-trigger"><span class="route-header">/text-to-image<span
+                        class="cost-badge">$0.25</span></span></h3>
+            <div class="collapsible-content">
+                <p><strong>Description:</strong> Generates an image based on a text prompt using OpenAI's DALL-E 3
+                    model.
+                </p>
+                <p><strong>Parameters:</strong></p>
+                <ul>
+                    <li><code>prompt</code> (query parameter): The text prompt for image generation. (e.g., "a beautiful
+                        landscape")</li>
+                </ul>
+                <p><strong>Example Return:</strong></p>
+                <pre><code>{
+    "image": "https://oaidalleapiprodscus.blob.core.windows.net/...",
+    "prompt": "a beautiful landscape"
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="collapsible-trigger"><span class="route-header">/word-count<span
+                        class="cost-badge">$0.01</span></span></h3>
+            <div class="collapsible-content">
+                <p><strong>Description:</strong> Counts the number of words in a given text.</p>
+                <p><strong>Parameters:</strong></p>
+                <ul>
+                    <li><code>text</code> (request body): The text for which to count words.</li>
+                </ul>
+                <p><strong>Example Return:</strong></p>
+                <pre><code>{
+    "wordCount": 5,
+    "text": "This is a sample text."
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="collapsible-trigger"><span class="route-header">/sentiment-analysis<span
+                        class="cost-badge">$0.05</span></span></h3>
+            <div class="collapsible-content">
+                <p><strong>Description:</strong> Performs basic sentiment analysis on the provided text, classifying it
+                    as
+                    positive, negative, or neutral.</p>
+                <p><strong>Parameters:</strong></p>
+                <ul>
+                    <li><code>text</code> (request body): The text to analyze.</li>
+                </ul>
+                <p><strong>Example Return:</strong></p>
+                <pre><code>{
+    "sentiment": "positive",
+    "text": "This is a happy and wonderful day!",
+    "scores": {
+        "positive": 3,
+        "negative": 0
+    }
+}</code></pre>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer">
+        Made by <a href="https://x.com/darianbailey14" target="_blank">darianb</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const triggers = document.querySelectorAll('.collapsible-trigger');
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function () {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    content.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
