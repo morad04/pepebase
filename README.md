@@ -2,19 +2,11 @@
 
 This project is a demonstration of a Node.js Express server that integrates the [X402 payment protocol](https://www.x402.org/) for monetizing API endpoints. It uses the `x402-express` middleware and `@coinbase/x402` facilitator.
 
-## Features
-
-- **Static File Serving**: Serves static files from the `public` directory (e.g., `index.html`).
-- **JSON Parsing**: Handles JSON request bodies.
-- **X402 Payment Middleware**: Protects specified API routes, requiring payment for access.
-  - Wallet address for payments is configured via `process.env.WALLET_ADDRESS`.
-- **Environment Variable Configuration**: Uses `dotenv` for managing environment variables (e.g., `OPENAI_API_KEY`).
-
 ## API Endpoints
 
-The server exposes the following API endpoints:
+The server exposes the following API endpoints (GET or POST):
 
-### `GET /text-to-image`
+### `/text-to-image`
 
 - **Description**: Generates an image based on a text prompt using OpenAI's DALL-E 3 model.
 - **Payment Required**: Yes (e.g., $0.25 on Base network).
@@ -23,7 +15,7 @@ The server exposes the following API endpoints:
 - **Word Limit**: The prompt is limited to a maximum of 10,000 words.
 - **Returns**: JSON object with `image` URL and `prompt`.
 
-### `POST /word-count`
+### ` /word-count`
 
 - **Description**: Counts the number of words in a given text.
 - **Payment Required**: Yes (e.g., $0.01 on Base network).
@@ -32,7 +24,7 @@ The server exposes the following API endpoints:
 - **Word Limit**: The input text is limited to a maximum of 10,000 words.
 - **Returns**: JSON object with `wordCount` and original `text`.
 
-### `POST /sentiment-analysis`
+### `/sentiment-analysis`
 
 - **Description**: Performs basic sentiment analysis on the provided text, classifying it as positive, negative, or neutral.
 - **Payment Required**: Yes (e.g., $0.50 on Base network).
