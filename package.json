@@ -21,7 +21,7 @@
     "openai": "^4.97.0",
     "viem": "^2.29.0",
     "x402-axios": "^0.3.1",
-    "x402-express": "^0.3.1",
+    "x402-express": "^0.3.2",
     "x402-fetch": "^0.3.1"
   },
   "devDependencies": {
