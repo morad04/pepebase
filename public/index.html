@@ -104,6 +104,64 @@
         .collapsible-content.active {
             display: block;
         }
+
+        .test-area-container {
+            margin-top: 25px;
+            /* Increased top margin for more space from example return */
+            padding: 15px;
+            border-top: 1px solid #e2e8f0;
+            /* Light border on top to separate */
+            background-color: #f8fafc;
+            /* Slightly different background */
+            border-radius: 0 0 8px 8px;
+            /* Rounded bottom corners to match card */
+        }
+
+        .test-area-container h4 {
+            margin-top: 0;
+            /* Remove default top margin from h4 */
+            margin-bottom: 15px;
+            color: #334155;
+            /* Slightly darker text for the heading */
+        }
+
+        .test-input-section {
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        .test-input-section label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .test-input-section input[type="text"],
+        .test-input-section textarea {
+            width: calc(100% - 22px);
+            /* Adjust for padding/border */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .test-endpoint-button {
+            background-color: #4CAF50;
+            /* Green */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95em;
+            margin-top: 5px;
+        }
+
+        .test-endpoint-button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 
@@ -168,6 +226,15 @@ fetchWithPayment(url, {
     "image": "https://oaidalleapiprodscus.blob.core.windows.net/...",
     "prompt": "a beautiful landscape"
 }</code></pre>
+                <div class="test-area-container">
+                    <h4>Try it out:</h4>
+                    <div class="test-input-section">
+                        <label for="prompt-tti">Prompt:</label>
+                        <input type="text" id="prompt-tti" placeholder="e.g., a blue ball">
+                    </div>
+                    <button class="test-endpoint-button" data-route="/text-to-image"
+                        data-param-ids='{"prompt": "prompt-tti"}'>Test Endpoint</button>
+                </div>
             </div>
         </div>
 
@@ -185,6 +252,16 @@ fetchWithPayment(url, {
     "wordCount": 5,
     "text": "This is a sample text."
 }</code></pre>
+                <div class="test-area-container">
+                    <h4>Try it out:</h4>
+                    <div class="test-input-section">
+                        <label for="text-wc">Text:</label>
+                        <textarea id="text-wc" rows="3" placeholder="Enter text here..."></textarea>
+                    </div>
+                    <button class="test-endpoint-button" data-route="/word-count"
+                        data-param-ids='{"text": "text-wc"}'>Test
+                        Endpoint</button>
+                </div>
             </div>
         </div>
 
@@ -208,6 +285,15 @@ fetchWithPayment(url, {
         "negative": 0
     }
 }</code></pre>
+                <div class="test-area-container">
+                    <h4>Try it out:</h4>
+                    <div class="test-input-section">
+                        <label for="text-sa">Text:</label>
+                        <textarea id="text-sa" rows="3" placeholder="Enter text here..."></textarea>
+                    </div>
+                    <button class="test-endpoint-button" data-route="/sentiment-analysis"
+                        data-param-ids='{"text": "text-sa"}'>Test Endpoint</button>
+                </div>
             </div>
         </div>
     </div>
@@ -226,6 +312,33 @@ fetchWithPayment(url, {
                     this.classList.toggle('active');
                     const content = this.nextElementSibling;
                     content.classList.toggle('active');
+                });
+            });
+
+            const testButtons = document.querySelectorAll('.test-endpoint-button');
+            const baseUrl = "http://402api.com"; // Base URL for the API
+
+            testButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const route = this.dataset.route;
+                    const paramIds = JSON.parse(this.dataset.paramIds);
+                    const params = new URLSearchParams();
+
+                    for (const paramName in paramIds) {
+                        const inputElementId = paramIds[paramName];
+                        const inputElement = document.getElementById(inputElementId);
+                        if (inputElement && inputElement.value.trim() !== "") {
+                            params.set(paramName, inputElement.value);
+                        } else if (inputElement) {
+                            // Optionally handle empty but present parameters,
+                            // or alert the user. For now, we'll just skip them if empty.
+                            // If the API requires the param even if empty, use:
+                            // params.set(paramName, ""); 
+                        }
+                    }
+
+                    const testUrl = `${baseUrl}${route}?${params.toString()}`;
+                    window.open(testUrl, '_blank');
                 });
             });
         });

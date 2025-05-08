@@ -24,11 +24,11 @@ app.use(
     {
       // Route configurations for protected endpoints
       "POST /text-to-image": {
-        price: "$0.10",
+        price: "$0.25",
         network: "base",
       },
       "GET /text-to-image": {
-        price: "$0.10",
+        price: "$0.25",
         network: "base",
       },
       "POST /word-count": {

@@ -16,7 +16,8 @@ if (!privateKey.startsWith("0x")) {
 }
 
 const account = privateKeyToAccount(privateKey);
-const fetchWithPayment = wrapFetchWithPayment(fetch, account);
+// 0.1 * 10 ** 7 is the maximum amount that can be paid
+const fetchWithPayment = wrapFetchWithPayment(fetch, account, 0.1 * 10 ** 7);
 
 const url = "http://localhost:4021/text-to-image?prompt=a%20red%20ball";
 
