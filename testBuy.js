@@ -18,21 +18,21 @@ if (!privateKey.startsWith("0x")) {
 const account = privateKeyToAccount(privateKey);
 const fetchWithPayment = wrapFetchWithPayment(fetch, account);
 
-const url = "http://402api.com/text-to-image?prompt=a%20red%20ball";
+const url = "http://localhost:4021/text-to-image?prompt=a%20red%20ball";
 
 fetchWithPayment(url, {
   method: "GET",
 })
   .then(async (response) => {
     const body = await response.json();
-    console.log(body);
+    console.log("body", body);
 
     const xPaymentHeader = response.headers.get("x-payment-response");
     if (xPaymentHeader) {
       const paymentResponse = decodeXPaymentResponse(xPaymentHeader);
-      console.log(paymentResponse);
+      console.log("paymentResponse", paymentResponse);
     }
   })
   .catch((error) => {
-    console.error(error.response?.data?.error);
+    console.error("error", error);
   });

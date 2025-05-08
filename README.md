@@ -9,7 +9,7 @@ The server exposes the following API endpoints (GET or POST):
 ### `/text-to-image`
 
 - **Description**: Generates an image based on a text prompt using OpenAI's DALL-E 3 model.
-- **Payment Required**: Yes (e.g., $0.25 on Base network).
+- **Payment Required**: Yes (e.g., $0.10 on Base network).
 - **Query Parameters**:
   - `prompt` (string): The text prompt for image generation (defaults to "a beautiful landscape").
 - **Word Limit**: The prompt is limited to a maximum of 10,000 words.
@@ -27,7 +27,7 @@ The server exposes the following API endpoints (GET or POST):
 ### `/sentiment-analysis`
 
 - **Description**: Performs basic sentiment analysis on the provided text, classifying it as positive, negative, or neutral.
-- **Payment Required**: Yes (e.g., $0.50 on Base network).
+- **Payment Required**: Yes (e.g., $0.05 on Base network).
 - **Request Body**:
   - `text` (string): The text to analyze.
 - **Word Limit**: The input text is limited to a maximum of 10,000 words.
