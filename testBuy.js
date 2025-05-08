@@ -18,7 +18,7 @@ if (!privateKey.startsWith("0x")) {
 const account = privateKeyToAccount(privateKey);
 const fetchWithPayment = wrapFetchWithPayment(fetch, account);
 
-const url = "http://402api.com/text-to-image?prompt=a%20blue%20ball";
+const url = "http://402api.com/text-to-image?prompt=a%20red%20ball";
 
 fetchWithPayment(url, {
   method: "GET",

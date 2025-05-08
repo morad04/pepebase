@@ -27,23 +27,11 @@ app.use(
         price: "$0.25",
         network: "base",
       },
-      "GET /text-to-image": {
-        price: "$0.25",
-        network: "base",
-      },
       "POST /word-count": {
         price: "$0.01",
         network: "base",
       },
-      "GET /word-count": {
-        price: "$0.01",
-        network: "base",
-      },
       "POST /sentiment-analysis": {
-        price: "$0.05",
-        network: "base",
-      },
-      "GET /sentiment-analysis": {
         price: "$0.05",
         network: "base",
       },
@@ -92,7 +80,6 @@ async function textToImageHandler(req, res) {
   }
 }
 app.post("/text-to-image", textToImageHandler);
-app.get("/text-to-image", textToImageHandler);
 
 // Shared handler for word-count
 function wordCountHandler(req, res) {
@@ -122,7 +109,6 @@ function wordCountHandler(req, res) {
   }
 }
 app.post("/word-count", wordCountHandler);
-app.get("/word-count", wordCountHandler);
 
 // Shared handler for sentiment-analysis
 function sentimentAnalysisHandler(req, res) {
@@ -193,17 +179,19 @@ function sentimentAnalysisHandler(req, res) {
   }
 }
 app.post("/sentiment-analysis", sentimentAnalysisHandler);
-app.get("/sentiment-analysis", sentimentAnalysisHandler);
 
 // Serve the home page
 app.get("/", (req, res) => {
   res.sendFile(path.join(process.cwd(), "public", "index.html"));
 });
 
-// Remove or comment out the app.listen() call
-// app.listen(4021, () => {
-//   console.log(`Server listening at http://localhost:4021`);
-// });
-
 // Add this line at the end of the file
 export default app;
+
+// Add this block to run the server locally
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 4021;
+  app.listen(PORT, () => {
+    console.log(`Server listening at http://localhost:${PORT}`);
+  });
+}
