@@ -188,7 +188,8 @@ dotenv.config();
 
 // Set your private key in .env file
 const account = privateKeyToAccount(process.env.PRIVATE_KEY);
-const fetchWithPayment = wrapFetchWithPayment(fetch, account);
+// Set max payment amount to 1 USDC
+const fetchWithPayment = wrapFetchWithPayment(fetch, account, 1);
 
 // Example API call
 const url = "http://402api.com/text-to-image?prompt=a%20blue%20ball";
