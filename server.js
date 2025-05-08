@@ -200,6 +200,10 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(process.cwd(), "public", "index.html"));
 });
 
-app.listen(4021, () => {
-  console.log(`Server listening at http://localhost:4021`);
-});
+// Remove or comment out the app.listen() call
+// app.listen(4021, () => {
+//   console.log(`Server listening at http://localhost:4021`);
+// });
+
+// Add this line at the end of the file
+export default app;

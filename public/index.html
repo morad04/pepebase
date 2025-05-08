@@ -115,6 +115,38 @@
         </p>
     </header>
 
+    <div class="card">
+        <h3 class="collapsible-trigger">Quickstart (Requires a wallet with Base USDC)</h3>
+        <div class="collapsible-content">
+            <p><strong>Step 1:</strong> Install required dependencies</p>
+            <pre><code>npm install viem x402-fetch dotenv</code></pre>
+
+            <p><strong>Step 2:</strong> Use the following code to make API calls</p>
+            <pre><code>import { privateKeyToAccount } from "viem/accounts";
+import { wrapFetchWithPayment, decodeXPaymentResponse } from "x402-fetch";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+// Set your private key in .env file
+const account = privateKeyToAccount(process.env.PRIVATE_KEY);
+const fetchWithPayment = wrapFetchWithPayment(fetch, account);
+
+// Example API call
+const url = "http://402api.com/text-to-image?prompt=a%20blue%20ball";
+
+fetchWithPayment(url, {
+  method: "GET",
+})
+  .then(async (response) => {
+    const body = await response.json();
+    console.log(body);
+  })
+  .catch((error) => {
+    console.error(error.response?.data?.error);
+  });</code></pre>
+        </div>
+    </div>
 
     <div>
         <h2>Available API Endpoints (GET or POST)</h2>
