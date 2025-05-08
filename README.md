@@ -107,7 +107,3 @@ The server exposes the following API endpoints (GET or POST):
 ---
 
 Learn more about the 402 payment protocol at [x402.org](https://www.x402.org/).
-
-```
-
-```

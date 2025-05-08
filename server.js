@@ -40,11 +40,11 @@ app.use(
         network: "base",
       },
       "POST /sentiment-analysis": {
-        price: "$0.5",
+        price: "$0.05",
         network: "base",
       },
       "GET /sentiment-analysis": {
-        price: "$0.5",
+        price: "$0.05",
         network: "base",
       },
     },
