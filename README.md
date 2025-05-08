@@ -15,7 +15,7 @@ The server exposes the following API endpoints (GET or POST):
 - **Word Limit**: The prompt is limited to a maximum of 10,000 words.
 - **Returns**: JSON object with `image` URL and `prompt`.
 
-### ` /word-count`
+### `/word-count`
 
 - **Description**: Counts the number of words in a given text.
 - **Payment Required**: Yes (e.g., $0.01 on Base network).
@@ -37,35 +37,64 @@ The server exposes the following API endpoints (GET or POST):
 
 - **Description**: Serves the `index.html` page from the `public` directory.
 
-## Setup and Running
+## Setup and Run Server
 
-1.  **Install Dependencies**:
-    ```bash
-    npm install
-    # or
-    yarn install
-    ```
-2.  **Environment Variables**:
-    Create a `.env` file in the root of the project with the following variables:
+1. **Install Dependencies**:
 
-    ```bash
-    # Your wallet address that will receive payments
-    WALLET_ADDRESS=your_wallet_address_here
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-    # OpenAI API key for DALL-E image generation
-    OPENAI_API_KEY=your_openai_api_key_here
+2. **Environment Variables**:
+   Create a `.env` file in the root of the project with the following variables:
 
-    # CDP API key ID
-    CDP_API_KEY_ID=your_cdp_api_key_id_here
+   ```env
+   # Your wallet address that will receive payments
+   WALLET_ADDRESS=your_wallet_address_here
 
-    # CDP API key secret
-    CDP_API_KEY_SECRET=your_cdp_api_key_secret_here
-    ```
+   # OpenAI API key for DALL-E image generation
+   OPENAI_API_KEY=your_openai_api_key_here
 
-`3.  **Start the Server**:
-   `bash
-node server.js
-```    The server will start on`http://localhost:4021`.
+   # CDP API key ID
+   CDP_API_KEY_ID=your_cdp_api_key_id_here
+
+   # CDP API key secret
+   CDP_API_KEY_SECRET=your_cdp_api_key_secret_here
+   ```
+
+3. **Start the Server**:
+
+   ```bash
+   node server.js
+   ```
+
+   The server will start on `http://localhost:4021`.
+
+## Test Buy
+
+1. **Install Dependencies** (if not already done):
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+2. **Environment Variables**:
+   Add the following to your `.env` file for testing buy:
+
+   ```env
+   # Private key for the wallet (for testing buy)
+   PRIVATE_KEY=0xPrivateKeyHere
+   ```
+
+3. **Test Buy**:
+
+   ```bash
+   node testBuy.js
+   ```
 
 ## Dependencies
 
@@ -78,3 +107,7 @@ node server.js
 ---
 
 Learn more about the 402 payment protocol at [x402.org](https://www.x402.org/).
+
+```
+
+```
