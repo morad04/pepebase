@@ -14,7 +14,9 @@ const fetchWithPayment = wrapFetchWithPayment(
 );
 
 // Example API call
-const url = "http://localhost:4021/word-count?text=hello%20world";
+const url =
+  "http://localhost:4021/text-to-image?prompt=a%20jumping%20jackrabbit";
+// const url = "http://localhost:4021/word-count?text=hello%20world";
 
 fetchWithPayment(url, {
   method: "GET",
