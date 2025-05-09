@@ -4,6 +4,7 @@ import { facilitator } from "@coinbase/x402";
 import dotenv from "dotenv";
 import path from "path";
 import OpenAI from "openai";
+import { base } from "viem/chains";
 
 dotenv.config();
 
@@ -12,6 +13,14 @@ const openai = new OpenAI({
 });
 
 const app = express();
+
+// unComment for Base mainnet
+// const network = "base";
+// const facilitatorObj = facilitator;
+
+// unComment for Base sepolia (testing)
+const network = "base-sepolia";
+const facilitatorObj = { url: "https://x402.org/facilitator" };
 
 // Serve static files from the public directory
 app.use(express.static(path.join(process.cwd(), "public")));
@@ -25,30 +34,30 @@ app.use(
       // Route configurations for protected endpoints
       "POST /text-to-image": {
         price: "$0.25",
-        network: "base",
+        network: network,
       },
       "GET /text-to-image": {
         price: "$0.25",
-        network: "base",
+        network: network,
       },
       "POST /word-count": {
         price: "$0.01",
-        network: "base",
+        network: network,
       },
       "GET /word-count": {
         price: "$0.01",
-        network: "base",
+        network: network,
       },
       "POST /sentiment-analysis": {
         price: "$0.05",
-        network: "base",
+        network: network,
       },
       "GET /sentiment-analysis": {
         price: "$0.05",
-        network: "base",
+        network: network,
       },
     },
-    facilitator
+    facilitatorObj
   )
 );
 
@@ -139,13 +148,15 @@ function wordCountHandler(req, res) {
   const startTime = Date.now();
   try {
     log("Processing word count request");
-    const text = req.body.text || req.query.text;
-    if (!text) {
+    const text = req.body?.text || req.query?.text || "";
+
+    if (!text || text.trim() === "") {
       log("Error: No text provided");
       return res.status(400).send({
         error: "No text provided",
       });
     }
+
     const wordCount = text.trim().split(/\s+/).length;
     if (wordCount > MAX_WORDS) {
       log("Error: Text exceeds word limit");
@@ -153,6 +164,7 @@ function wordCountHandler(req, res) {
         error: `Text exceeds maximum word count of ${MAX_WORDS} words.`,
       });
     }
+
     log(`Word count calculated: ${wordCount}`);
     log(`Request completed in ${Date.now() - startTime}ms`);
     res.send({
@@ -175,7 +187,7 @@ function sentimentAnalysisHandler(req, res) {
   const startTime = Date.now();
   try {
     log("Processing sentiment analysis request");
-    const text = req.body.text || req.query.text;
+    const text = req.body?.text || req.query?.text || "";
     if (!text) {
       log("Error: No text provided");
       return res.status(400).send({

@@ -14,7 +14,7 @@ const fetchWithPayment = wrapFetchWithPayment(
 );
 
 // Example API call
-const url = "https://402api.com/word-count?text=hello%20world";
+const url = "http://localhost:4021/word-count?text=hello%20world";
 
 fetchWithPayment(url, {
   method: "GET",
