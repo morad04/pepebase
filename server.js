@@ -54,23 +54,61 @@ app.use(
 
 const MAX_WORDS = 10000;
 
+// Centralized logging function
+function log(message, level = "info", errorObj = null) {
+  const timestamp = new Date().toISOString();
+  if (process.env.NODE_ENV !== "production") {
+    if (level === "error") {
+      if (errorObj) {
+        console.error(`[${timestamp}] ERROR: ${message}`, errorObj);
+      } else {
+        console.error(`[${timestamp}] ERROR: ${message}`);
+      }
+    } else {
+      console.log(`[${timestamp}] ${message}`);
+    }
+  } else {
+    // In production, only log errors
+    if (level === "error") {
+      if (errorObj) {
+        console.error(`[${timestamp}] ERROR: ${message}`, errorObj);
+      } else {
+        console.error(`[${timestamp}] ERROR: ${message}`);
+      }
+    }
+  }
+}
+
+// Add request logging middleware (only in development)
+app.use((req, res, next) => {
+  const start = Date.now();
+  log(`${req.method} ${req.url}`);
+  log(`Request Headers: ${JSON.stringify(req.headers)}`);
+  res.on("finish", () => {
+    const duration = Date.now() - start;
+    log(`${req.method} ${req.url} - ${res.statusCode} (${duration}ms)`);
+  });
+  next();
+});
+
 // Shared handler for text-to-image
 async function textToImageHandler(req, res) {
+  const startTime = Date.now();
   try {
-    // Add logging to debug the request
-    console.log("Request body:", req.body);
-    console.log("Request query:", req.query);
-
+    log("Processing text-to-image request");
+    log(`Request body: ${JSON.stringify(req.body)}`);
+    log(`Request query: ${JSON.stringify(req.query)}`);
     const prompt =
       req.body?.prompt || req.query?.prompt || "a beautiful landscape";
-    console.log("Using prompt:", prompt);
-
+    log(`Using prompt: ${prompt}`);
     const promptWordCount = prompt.trim().split(/\s+/).length;
     if (promptWordCount > MAX_WORDS) {
+      log("Error: Prompt exceeds word limit");
       return res.status(400).send({
         error: `Prompt exceeds maximum word count of ${MAX_WORDS} words.`,
       });
     }
+    log("Calling OpenAI API");
     const response = await openai.images.generate({
       model: "dall-e-3",
       prompt: prompt,
@@ -79,12 +117,14 @@ async function textToImageHandler(req, res) {
       size: "1024x1024",
     });
     const imageUrl = response.data[0].url;
+    log("Image generated successfully");
+    log(`Request completed in ${Date.now() - startTime}ms`);
     res.send({
       image: imageUrl,
       prompt: prompt,
     });
   } catch (error) {
-    console.error("Error generating image:", error);
+    log("Error generating image:", "error", error);
     res.status(500).send({
       error: "Failed to generate image",
       message: error.message,
@@ -96,25 +136,31 @@ app.get("/text-to-image", textToImageHandler);
 
 // Shared handler for word-count
 function wordCountHandler(req, res) {
+  const startTime = Date.now();
   try {
+    log("Processing word count request");
     const text = req.body.text || req.query.text;
     if (!text) {
+      log("Error: No text provided");
       return res.status(400).send({
         error: "No text provided",
       });
     }
     const wordCount = text.trim().split(/\s+/).length;
     if (wordCount > MAX_WORDS) {
+      log("Error: Text exceeds word limit");
       return res.status(400).send({
         error: `Text exceeds maximum word count of ${MAX_WORDS} words.`,
       });
     }
+    log(`Word count calculated: ${wordCount}`);
+    log(`Request completed in ${Date.now() - startTime}ms`);
     res.send({
       wordCount,
       text: text,
     });
   } catch (error) {
-    console.error("Error counting words:", error);
+    log("Error counting words:", "error", error);
     res.status(500).send({
       error: "Failed to count words",
       message: error.message,
@@ -126,15 +172,19 @@ app.get("/word-count", wordCountHandler);
 
 // Shared handler for sentiment-analysis
 function sentimentAnalysisHandler(req, res) {
+  const startTime = Date.now();
   try {
+    log("Processing sentiment analysis request");
     const text = req.body.text || req.query.text;
     if (!text) {
+      log("Error: No text provided");
       return res.status(400).send({
         error: "No text provided",
       });
     }
     const wordCount = text.trim().split(/\s+/).length;
     if (wordCount > MAX_WORDS) {
+      log("Error: Text exceeds word limit");
       return res.status(400).send({
         error: `Text exceeds maximum word count of ${MAX_WORDS} words.`,
       });
@@ -176,6 +226,9 @@ function sentimentAnalysisHandler(req, res) {
     } else if (negativeScore > positiveScore) {
       sentiment = "negative";
     }
+    log(`Sentiment analysis completed: ${sentiment}`);
+    log(`Scores - Positive: ${positiveScore}, Negative: ${negativeScore}`);
+    log(`Request completed in ${Date.now() - startTime}ms`);
     res.send({
       sentiment,
       text: text,
@@ -185,7 +238,7 @@ function sentimentAnalysisHandler(req, res) {
       },
     });
   } catch (error) {
-    console.error("Error performing sentiment analysis:", error);
+    log("Error performing sentiment analysis:", "error", error);
     res.status(500).send({
       error: "Failed to perform sentiment analysis",
       message: error.message,

@@ -162,6 +162,25 @@
         .test-endpoint-button:hover {
             background-color: #45a049;
         }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 12px;
+            font-size: 0.95em;
+            cursor: pointer;
+            z-index: 2;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #1d4ed8;
+        }
     </style>
 </head>
 
@@ -177,10 +196,16 @@
         <h3 class="collapsible-trigger">Quickstart (Requires a wallet with Base USDC)</h3>
         <div class="collapsible-content">
             <p><strong>Step 1:</strong> Install required dependencies</p>
-            <pre><code>npm install viem x402-fetch dotenv</code></pre>
+            <div style="position: relative;">
+                <button class="copy-btn" data-copy-target="quickstart-install" title="Copy to clipboard">Copy</button>
+                <pre><code id="quickstart-install">npm install viem x402-fetch dotenv</code></pre>
+            </div>
 
             <p><strong>Step 2:</strong> Use the following code to make API calls</p>
-            <pre><code>import { privateKeyToAccount } from "viem/accounts";
+            <div style="position: relative;">
+                <button class="copy-btn" data-copy-target="quickstart-code" title="Copy to clipboard">Copy</button>
+                <pre><code id="quickstart-code">import { privateKeyToAccount } from "viem/accounts";
+import { privateKeyToAccount } from "viem/accounts";
 import { wrapFetchWithPayment, decodeXPaymentResponse } from "x402-fetch";
 import dotenv from "dotenv";
 
@@ -188,22 +213,28 @@ dotenv.config();
 
 // Set your private key in .env file
 const account = privateKeyToAccount(process.env.PRIVATE_KEY);
-// Set max payment amount to 1 USDC
-const fetchWithPayment = wrapFetchWithPayment(fetch, account, 1);
+// Set max payment amount to 1 USDC in base units
+const fetchWithPayment = wrapFetchWithPayment(
+fetch,
+account,
+BigInt(0.1 * 10 ** 6)
+);
 
 // Example API call
-const url = "http://402api.com/text-to-image?prompt=a%20blue%20ball";
+const url = "https://402api.com/text-to-image?prompt=a%20blue%20ball";
 
 fetchWithPayment(url, {
-  method: "GET",
+method: "GET",
 })
-  .then(async (response) => {
-    const body = await response.json();
-    console.log(body);
-  })
-  .catch((error) => {
-    console.error(error.response?.data?.error);
-  });</code></pre>
+.then(async (response) => {
+const body = await response.json();
+console.log(body);
+})
+.catch((error) => {
+console.error(error);
+});
+</code></pre>
+            </div>
         </div>
     </div>
 
@@ -340,6 +371,23 @@ fetchWithPayment(url, {
 
                     const testUrl = `${baseUrl}${route}?${params.toString()}`;
                     window.open(testUrl, '_blank');
+                });
+            });
+
+            // Copy to clipboard logic for Quickstart code blocks
+            const copyBtns = document.querySelectorAll('.copy-btn');
+            copyBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const targetId = btn.getAttribute('data-copy-target');
+                    const codeElem = document.getElementById(targetId);
+                    if (codeElem) {
+                        const text = codeElem.innerText;
+                        navigator.clipboard.writeText(text).then(() => {
+                            const original = btn.textContent;
+                            btn.textContent = 'Copied!';
+                            setTimeout(() => { btn.textContent = original; }, 1200);
+                        });
+                    }
                 });
             });
         });
