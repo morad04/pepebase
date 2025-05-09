@@ -9,8 +9,8 @@ const account = privateKeyToAccount(process.env.PRIVATE_KEY);
 // Set max payment amount to 1 USDC in base units
 const fetchWithPayment = wrapFetchWithPayment(
   fetch,
-  account
-  //   BigInt(0.1 * 10 ** 7)
+  account,
+  BigInt(0.1 * 10 ** 7)
 );
 
 // Example API call
