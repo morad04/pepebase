@@ -4,6 +4,7 @@ This project is a demonstration of a Node.js Express server that integrates the 
 
 ## API Endpoints
 
+Edit and add API Endpoints in server.js and public/config.js
 The server exposes the following API endpoints (GET or POST):
 
 ### `/text-to-image`

@@ -6,14 +6,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/x-icon" href="/favicon.ico">
 	<title>402 API</title>
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
 	<header>
-		<h1>402 API</h1>
+		<h1>402 API (Minimal GET)</h1>
 		<p>A collection of demo API tools using the <a href="https://www.x402.org/" target="_blank">x402
-				payment</a> protocol.</p>
+				payment</a> protocol. All endpoints are assumed GET.</p>
 	</header>
 
 	<div class="card">
@@ -42,17 +42,16 @@ const fetchWithPayment = wrapFetchWithPayment(fetch, account, BigInt(0.1 * 10 **
 
 const url = "https://402api.com/word-count?text=hello%20world"; // Example GET
 fetchWithPayment(url, { method: "GET" }) // x402-fetch still needs method specified
-    .then(async (response) => { const body = await response.json(); console.log(body); })
-    .catch((error) => { console.error(error); });
+    .then(async (response) => { const body = await response.json(); console.log(body); })
+    .catch((error) => { console.error(error); });
 </code></pre>
 			</div>
 		</div>
 	</div>
 
 	<div>
-		<h2>Available API Endpoints (GET or POST)</h2>
-		<div id="api-endpoints-container">
-		</div>
+		<h2>Available API Endpoints (GET only)</h2>
+		<div id="api-endpoints-container"></div>
 	</div>
 
 	<template id="api-endpoint-template">
@@ -71,10 +70,14 @@ fetchWithPayment(url, { method: "GET" }) // x402-fetch still needs method specif
 				<p><strong>Example Return:</strong></p>
 				<pre><code class="api-example-return"></code></pre>
 				<div class="test-area-container">
-					<h4>Try it out:</h4>
+					<h4>Try it out (GET):</h4>
 					<div class="api-test-inputs">
 					</div>
 					<button class="test-endpoint-button" data-route="">Test Endpoint</button>
+					<div class="response-area" style="display: none;">
+						<h4>Response:</h4>
+						<pre><code class="api-response-code"></code></pre>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -85,8 +88,8 @@ fetchWithPayment(url, { method: "GET" }) // x402-fetch still needs method specif
 		<a href="https://github.com/Dsinghbailey/402-api" target="_blank">GitHub Repository</a>
 	</div>
 
-	<script src="config.js"></script>
-	<script src="main.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/main.js"></script>
 </body>
 
 </html>
