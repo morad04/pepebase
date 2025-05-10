@@ -2,6 +2,8 @@
 
 Boilerplate for building out an api on the [X402 payment protocol](https://www.x402.org/) for monetizing API endpoints.
 
+Live demo at [402api.com] (https://www.402api.com)
+
 ## API Endpoints
 
 Edit and add API Endpoints in server.js and public/config.js
