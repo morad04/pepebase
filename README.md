@@ -1,6 +1,6 @@
 # 402 API
 
-This project is a demonstration of a Node.js Express server that integrates the [X402 payment protocol](https://www.x402.org/) for monetizing API endpoints. It uses the `x402-express` middleware and `@coinbase/x402` facilitator.
+Boilerplate for building out an api on the [X402 payment protocol](https://www.x402.org/) for monetizing API endpoints.
 
 ## API Endpoints
 
