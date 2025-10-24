@@ -1,5 +1,5 @@
 // --- Configuration ---
-const API_BASE_URL = "https://basepepe.vercel.app"; // Replace with your API base URL
+const API_BASE_URL = "https://pepebase-iota.vercel.app/"; 
 
 // --- Data for API Endpoints ---
 const apiEndpoints = [
