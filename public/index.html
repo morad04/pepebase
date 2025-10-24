@@ -40,7 +40,7 @@ dotenv.config();
 const account = privateKeyToAccount(process.env.PRIVATE_KEY);
 const fetchWithPayment = wrapFetchWithPayment(fetch, account, BigInt(0.1 * 10 ** 7));
 
-const url = "https://402api.com/word-count?text=hello%20world"; // Example GET
+const url = "https://pepebase-iota.vercel.app//word-count?text=hello%20world"; // Example GET
 fetchWithPayment(url, { method: "GET" }) // x402-fetch still needs method specified
     .then(async (response) => { const body = await response.json(); console.log(body); })
     .catch((error) => { console.error(error); });
