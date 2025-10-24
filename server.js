@@ -19,7 +19,7 @@ const openai = new OpenAI({
 const app = express();
 
 // Uncomment for Base sepolia (testing)
-const network = "base-sepolia";
+const network = "base";
 const facilitatorObj = { url: "https://x402.org/facilitator" };
 // Uncomment for Base mainnet
 // const network = "base";
