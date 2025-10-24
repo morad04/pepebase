@@ -19,11 +19,11 @@ const openai = new OpenAI({
 const app = express();
 
 // Uncomment for Base sepolia (testing)
-const network = "base";
-const facilitatorObj = { url: "https://x402.org/facilitator" };
+//const network = "base";
+//const facilitatorObj = { url: "https://x402.org/facilitator" };
 // Uncomment for Base mainnet
-// const network = "base";
-// const facilitatorObj = facilitator;
+ const network = "base";
+ const facilitatorObj = facilitator;
 
 // Serve static files from the public directory
 app.use(express.static(path.join(process.cwd(), "public")));
